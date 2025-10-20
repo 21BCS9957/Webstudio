@@ -49,19 +49,19 @@ const Process = () => {
   const progressHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <section ref={sectionRef as any} id="process" className="py-16 bg-background">
-      <div className="container mx-auto px-6">
+    <section ref={sectionRef as any} id="process" className="py-12 sm:py-16 bg-background">
+      <div className="container mx-auto px-4 sm:px-6">
         <motion.div
           ref={headerAnimation.ref as any}
           initial="hidden"
           animate={headerAnimation.controls}
           variants={fadeInUp}
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
             Our <span className="text-gradient">Process</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             A proven methodology that delivers results, every time.
           </p>
         </motion.div>
@@ -133,13 +133,13 @@ const Process = () => {
               initial="hidden"
               animate={stepsAnimation.controls}
               variants={staggerContainer}
-              className="space-y-16"
+              className="space-y-12 sm:space-y-16"
             >
               {steps.map((step, index) => (
                 <motion.div
                   key={index}
                   variants={staggerItem}
-                  className={`flex flex-col md:flex-row gap-8 items-center ${
+                  className={`flex flex-col md:flex-row gap-6 sm:gap-8 items-center ${
                     index % 2 === 0 ? "" : "md:flex-row-reverse"
                   }`}
                 >
@@ -157,12 +157,12 @@ const Process = () => {
                         damping: 25,
                         mass: 0.8
                       }}
-                      className={`bg-card border-2 border-border p-8 rounded-2xl cursor-pointer transition-colors duration-300 hover:border-primary/20 ${
+                      className={`bg-card border-2 border-border p-6 sm:p-8 rounded-2xl cursor-pointer transition-colors duration-300 hover:border-primary/20 ${
                         index % 2 === 0 ? "md:text-right" : "md:text-left"
                       }`}
                     >
                       <motion.h3 
-                        className="text-2xl font-bold mb-3 flex items-center gap-3"
+                        className="text-xl sm:text-2xl font-bold mb-3 flex items-center gap-3 justify-center md:justify-start"
                         whileHover={{ color: "hsl(var(--primary))" }}
                         transition={{ duration: 0.2 }}
                       >
@@ -183,7 +183,7 @@ const Process = () => {
                         {step.title}
                       </motion.h3>
                       <motion.p 
-                        className="text-muted-foreground"
+                        className="text-sm sm:text-base text-muted-foreground leading-relaxed"
                         whileHover={{ color: "hsl(var(--foreground))" }}
                         transition={{ duration: 0.2 }}
                       >
@@ -209,7 +209,7 @@ const Process = () => {
                         damping: 20,
                         mass: 0.6
                       }}
-                      className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center border-4 border-background shadow-lg cursor-pointer hover:bg-primary/20 transition-colors duration-300"
+                      className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-primary/10 flex items-center justify-center border-4 border-background shadow-lg cursor-pointer hover:bg-primary/20 transition-colors duration-300"
                     >
                       <motion.div
                         whileHover={{ 
@@ -222,7 +222,7 @@ const Process = () => {
                           damping: 25 
                         }}
                       >
-                        <step.icon className="w-10 h-10 text-primary" />
+                        <step.icon className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
                       </motion.div>
                     </motion.div>
                     

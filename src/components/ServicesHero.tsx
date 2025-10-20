@@ -18,7 +18,7 @@ const ServicesHero: React.FC<ServicesHeroProps> = ({ onTunnelComplete }) => {
   const overlayRef = useRef<HTMLDivElement>(null);
   const { prefersReducedMotion, shouldAnimate } = useReducedMotion();
   const { registerAnimation } = useAnimationPerformance();
-  
+
   // Initialize Lenis-GSAP integration
   useLenisGSAP();
 
@@ -30,7 +30,7 @@ const ServicesHero: React.FC<ServicesHeroProps> = ({ onTunnelComplete }) => {
     if (!shouldAnimate) {
       // Reduced motion: simple fade transition
       const tl = gsap.timeline();
-      
+
       ScrollTrigger.create({
         trigger: heroRef.current,
         start: 'top top',
@@ -54,7 +54,7 @@ const ServicesHero: React.FC<ServicesHeroProps> = ({ onTunnelComplete }) => {
 
     // Full animation: tunnel effect
     const tl = gsap.timeline();
-    
+
     ScrollTrigger.create({
       trigger: heroRef.current,
       start: 'top top',
@@ -73,12 +73,12 @@ const ServicesHero: React.FC<ServicesHeroProps> = ({ onTunnelComplete }) => {
       ease: 'power2.inOut',
       transformOrigin: 'center center'
     })
-    // Fade out the overlay to reveal content behind
-    .to(overlayRef.current, {
-      opacity: 0,
-      duration: 0.5,
-      ease: 'power2.out'
-    }, 0.7);
+      // Fade out the overlay to reveal content behind
+      .to(overlayRef.current, {
+        opacity: 0,
+        duration: 0.5,
+        ease: 'power2.out'
+      }, 0.7);
 
     // Add subtle background parallax
     const backgroundElements = heroRef.current.querySelectorAll('.parallax-bg');
@@ -97,8 +97,8 @@ const ServicesHero: React.FC<ServicesHeroProps> = ({ onTunnelComplete }) => {
   }, [shouldAnimate, onTunnelComplete, registerAnimation]);
 
   return (
-    <div 
-      ref={heroRef} 
+    <div
+      ref={heroRef}
       className="relative h-screen flex items-center justify-center overflow-hidden bg-background"
     >
       {/* Background elements for parallax */}
@@ -106,21 +106,21 @@ const ServicesHero: React.FC<ServicesHeroProps> = ({ onTunnelComplete }) => {
         <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-primary/20 blur-3xl" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-accent/20 blur-3xl" />
       </div>
-      
+
       {/* Main headline */}
-      <h1 
+      <h1
         ref={headlineRef}
-        className="text-6xl md:text-8xl lg:text-9xl font-bold text-center leading-none text-outline gpu-accelerated"
+        className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl xl:text-9xl font-bold text-center leading-none text-outline gpu-accelerated px-4"
       >
         Services that
         <br />
         <span className="text-gradient bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
-         WebStudio
+          CodXBros
         </span>
       </h1>
 
       {/* Overlay that gets masked by the text */}
-      <div 
+      <div
         ref={overlayRef}
         className="absolute inset-0 bg-background z-10 pointer-events-none tunnel-mask"
       />

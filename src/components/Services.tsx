@@ -78,8 +78,10 @@ const ServicesHeroWithCards: React.FC = () => {
           const totalCards = services.length;
           const centerIndex = (totalCards - 1) / 2;
           
-          // Horizontal positioning with tighter spacing
-          const cardSpacing = 220; // Reduced spacing for better fit
+          // Responsive horizontal positioning
+          const isMobile = window.innerWidth < 640;
+          const isTablet = window.innerWidth < 1024;
+          const cardSpacing = isMobile ? 160 : isTablet ? 180 : 220;
           const totalWidth = (totalCards - 1) * cardSpacing;
           const startX = -totalWidth / 2;
           const finalX = startX + (index * cardSpacing);
@@ -171,8 +173,10 @@ const ServicesHeroWithCards: React.FC = () => {
       const totalCards = services.length;
       const centerIndex = (totalCards - 1) / 2;
       
-      // Horizontal positioning with optimized spacing
-      const cardSpacing = 220; // Tighter spacing for better screen fit
+      // Responsive horizontal positioning
+      const isMobile = window.innerWidth < 640;
+      const isTablet = window.innerWidth < 1024;
+      const cardSpacing = isMobile ? 160 : isTablet ? 180 : 220;
       const totalWidth = (totalCards - 1) * cardSpacing;
       const startX = -totalWidth / 2;
       const finalX = startX + (index * cardSpacing);
@@ -221,7 +225,7 @@ const ServicesHeroWithCards: React.FC = () => {
       <div className="relative z-20 w-full max-w-6xl mx-auto px-6">
         <h1 
           ref={headlineRef}
-          className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[12rem] font-bold text-center leading-tight will-change-transform"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl xl:text-9xl 2xl:text-[10rem] font-bold text-center leading-tight will-change-transform px-4"
           style={{
             WebkitTextStroke: '3px currentColor',
             WebkitTextFillColor: 'transparent',
@@ -237,7 +241,7 @@ const ServicesHeroWithCards: React.FC = () => {
               WebkitTextFillColor: 'transparent'
             }}
           >
-            Webstudio
+            CodXBros
           </span>
         </h1>
       </div>
@@ -252,29 +256,29 @@ const ServicesHeroWithCards: React.FC = () => {
         }}
       />
 
-      {/* Enhanced curved cards layout */}
-      <div className="absolute inset-0 flex items-center justify-center z-5 px-4">
-        <div className="relative w-full max-w-[90vw]">
+      {/* Enhanced curved cards layout - mobile responsive */}
+      <div className="absolute inset-0 flex items-center justify-center z-5 px-2 sm:px-4">
+        <div className="relative w-full max-w-[95vw] sm:max-w-[90vw]">
           {services.map((service, index) => (
             <Card
               key={index}
               ref={(el) => addCardRef(el, index)}
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-52 h-80 bg-card/95 backdrop-blur-md border-2 border-primary/30 shadow-xl hover:shadow-2xl transition-shadow will-change-transform flex flex-col"
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-40 sm:w-48 md:w-52 h-64 sm:h-72 md:h-80 bg-card/95 backdrop-blur-md border-2 border-primary/30 shadow-xl hover:shadow-2xl transition-shadow will-change-transform flex flex-col"
             >
-              <CardHeader className="text-center pb-4 flex-shrink-0">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mb-4 mx-auto shadow-lg">
-                  <service.icon className="w-8 h-8 text-primary" />
+              <CardHeader className="text-center pb-2 sm:pb-3 flex-shrink-0 px-2 sm:px-4 md:px-6">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mb-2 sm:mb-3 mx-auto shadow-lg">
+                  <service.icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-primary" />
                 </div>
-                <CardTitle className="text-lg font-bold mb-2 text-foreground leading-tight">{service.title}</CardTitle>
-                <CardDescription className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
+                <CardTitle className="text-sm sm:text-base md:text-lg font-bold mb-1 sm:mb-2 text-foreground leading-tight">{service.title}</CardTitle>
+                <CardDescription className="text-xs text-muted-foreground leading-relaxed line-clamp-2 sm:line-clamp-3">
                   {service.description}
                 </CardDescription>
               </CardHeader>
-              <CardContent className="pt-0 flex-1 flex flex-col justify-start">
-                <ul className="space-y-1.5">
+              <CardContent className="pt-0 flex-1 flex flex-col justify-start px-2 sm:px-4 md:px-6">
+                <ul className="space-y-1">
                   {service.outcomes.slice(0, 3).map((outcome, i) => (
-                    <li key={i} className="flex items-center text-xs">
-                      <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-primary to-accent mr-2 flex-shrink-0" />
+                    <li key={i} className="flex items-start text-xs">
+                      <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-primary to-accent mr-2 flex-shrink-0 mt-1" />
                       <span className="text-foreground/80 leading-tight">{outcome}</span>
                     </li>
                   ))}

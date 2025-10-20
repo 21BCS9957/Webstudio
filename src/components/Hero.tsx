@@ -8,7 +8,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center pt-16 sm:pt-20 pb-0 overflow-hidden">
       {/* Dynamic animated background */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-accent/10">
         {/* Floating orbs */}
@@ -27,47 +27,47 @@ const Hero = () => {
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="animate-fade-in">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-6">
               High-Performance
               <br />
-              <span className="text-gradient">Websites that Convert</span>
+              <span className="text-gradient">Websites by CodXBros</span>
             </h1>
-            <p className="text-xl text-muted-foreground mb-8 max-w-xl">
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 max-w-xl leading-relaxed">
               Design → Development → Optimization for startups & SMBs. We build
               websites that don't just look good—they drive results.
             </p>
 
-            <div className="flex flex-wrap gap-4 mb-12">
+            <div className="flex flex-col sm:flex-row gap-4 mb-12">
               <Button
                 size="lg"
                 onClick={handleCalendly}
-                className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all px-8 py-4 text-lg font-semibold hover:scale-105"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base md:text-lg font-semibold hover:scale-105 w-full sm:w-auto"
               >
-                <Calendar className="mr-2 h-6 w-6" />
+                <Calendar className="mr-2 h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" />
                 Book Free Call
               </Button>
               <Button
                 size="lg"
                 variant="outline"
                 onClick={handleCalendly}
-                className="border-2 hover:bg-accent hover:text-accent-foreground hover:border-accent transition-all px-8 py-4 text-lg font-semibold hover:scale-105"
+                className="border-2 hover:bg-accent hover:text-accent-foreground hover:border-accent transition-all px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base md:text-lg font-semibold hover:scale-105 w-full sm:w-auto"
               >
-                <ArrowRight className="mr-2 h-6 w-6" />
+                <ArrowRight className="mr-2 h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" />
                 Get Started
               </Button>
             </div>
 
-            <div className="flex items-center gap-8 opacity-60">
-              <p className="text-sm font-medium">Trusted by:</p>
-              <div className="flex gap-6">
-                <div className="w-24 h-8 bg-muted rounded flex items-center justify-center text-xs font-semibold">
-                  CLIENT 1
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6 opacity-60">
+              <p className="text-xs sm:text-sm font-medium">Trusted by:</p>
+              <div className="flex flex-wrap gap-2 sm:gap-4">
+                <div className="w-18 sm:w-20 md:w-24 h-7 sm:h-8 bg-muted rounded flex items-center justify-center text-xs font-semibold">
+                  TechFlow
                 </div>
-                <div className="w-24 h-8 bg-muted rounded flex items-center justify-center text-xs font-semibold">
-                  CLIENT 2
+                <div className="w-18 sm:w-20 md:w-24 h-7 sm:h-8 bg-muted rounded flex items-center justify-center text-xs font-semibold">
+                  StartupX
                 </div>
-                <div className="w-24 h-8 bg-muted rounded flex items-center justify-center text-xs font-semibold">
-                  CLIENT 3
+                <div className="w-18 sm:w-20 md:w-24 h-7 sm:h-8 bg-muted rounded flex items-center justify-center text-xs font-semibold">
+                  InnovateCo
                 </div>
               </div>
             </div>

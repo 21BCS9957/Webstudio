@@ -64,7 +64,7 @@ This implementation creates a smooth scroll tunnel effect where users "scroll in
 
 ## Animation Sequence
 
-1. **Initial State**: Hero displays large "Services by Webstudio" text (up to 12rem size)
+1. **Initial State**: Hero displays large "Services by CodXBros" text (responsive sizing)
 2. **Scroll Start**: ScrollTrigger pins the hero section for entire sequence
 3. **Phase 1 - Tunnel Effect (0%-50%)**: Text scales up 8x and fades out completely, overlay disappears
 4. **Phase 2 - Enhanced Curved Card Layout (50%-100%)**: Cards appear through the tunnel opening

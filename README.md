@@ -1,4 +1,4 @@
-# Webstudio - High-Performance Websites
+# CodXBros - High-Performance Websites
 
 A modern web development agency website built with React, TypeScript, and advanced animations.
 

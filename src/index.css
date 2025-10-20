@@ -255,6 +255,12 @@ All colors MUST be HSL.
     will-change: transform, opacity;
   }
   
+  /* Mobile-optimized service cards */
+  .service-card-mobile {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+  
   /* Text truncation utilities */
   .line-clamp-2 {
     display: -webkit-box;
@@ -314,6 +320,18 @@ All colors MUST be HSL.
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+  }
+  
+  /* Services cards mobile optimization */
+  .services-card-container {
+    max-width: 100vw;
+    overflow: hidden;
+  }
+  
+  /* Ensure cards don't exceed viewport */
+  .services-card {
+    max-width: calc(50vw - 2rem);
+    min-width: 140px;
   }
 }
 

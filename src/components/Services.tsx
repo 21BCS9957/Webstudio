@@ -69,36 +69,59 @@ const ServicesHeroWithCards: React.FC = () => {
     ScrollTrigger.getAll().forEach(trigger => trigger.kill());
 
     if (!shouldAnimate) {
-      // Reduced motion: simple horizontal layout with text hidden and cards visible
+      // Reduced motion: mobile-friendly layout
       gsap.set(headlineRef.current, { opacity: 0 }); // Hide text
       gsap.set(overlayRef.current, { opacity: 0 });
       cardsRef.current.forEach((card, index) => {
         if (card) {
-          // Creative curved layout: cards in a gentle arc for better visibility
           const totalCards = services.length;
           const centerIndex = (totalCards - 1) / 2;
-          
-          // Responsive horizontal positioning
           const isMobile = window.innerWidth < 640;
           const isTablet = window.innerWidth < 1024;
-          const cardSpacing = isMobile ? 160 : isTablet ? 180 : 220;
-          const totalWidth = (totalCards - 1) * cardSpacing;
-          const startX = -totalWidth / 2;
-          const finalX = startX + (index * cardSpacing);
           
-          // Gentle curve: outer cards slightly higher for visibility
-          const distanceFromCenter = Math.abs(index - centerIndex);
-          const curveHeight = distanceFromCenter * 15; // Subtle curve
-          const finalY = -curveHeight;
-          
-          gsap.set(card, {
-            opacity: 1,
-            x: finalX,
-            y: finalY,
-            scale: 1,
-            rotation: 0,
-            zIndex: index + 1
-          });
+          if (isMobile) {
+            // Mobile: Stack cards vertically in a compact grid
+            const cardsPerRow = 2;
+            const row = Math.floor(index / cardsPerRow);
+            const col = index % cardsPerRow;
+            const cardWidth = 144; // Card width (w-36 = 144px)
+            const cardSpacing = 16; // Gap between cards
+            const totalRowWidth = (cardsPerRow * cardWidth) + ((cardsPerRow - 1) * cardSpacing);
+            
+            const finalX = -totalRowWidth / 2 + (col * (cardWidth + cardSpacing)) + cardWidth / 2;
+            const finalY = -80 + (row * 180); // Tighter vertical spacing
+            
+            gsap.set(card, {
+              opacity: 1,
+              x: finalX,
+              y: finalY,
+              scale: 0.9, // Slightly smaller on mobile
+              rotation: 0,
+              zIndex: index + 1
+            });
+          } else {
+            // Tablet and desktop: horizontal curved layout
+            const cardSpacing = isTablet ? 180 : 220;
+            const maxViewportWidth = window.innerWidth * 0.9; // Use 90% of viewport
+            const totalWidth = Math.min((totalCards - 1) * cardSpacing, maxViewportWidth);
+            const actualSpacing = totalWidth / (totalCards - 1);
+            const startX = -totalWidth / 2;
+            const finalX = startX + (index * actualSpacing);
+            
+            // Gentle curve: outer cards slightly higher for visibility
+            const distanceFromCenter = Math.abs(index - centerIndex);
+            const curveHeight = distanceFromCenter * 15;
+            const finalY = -curveHeight;
+            
+            gsap.set(card, {
+              opacity: 1,
+              x: finalX,
+              y: finalY,
+              scale: 1,
+              rotation: 0,
+              zIndex: index + 1
+            });
+          }
         }
       });
       return cleanup;
@@ -165,37 +188,61 @@ const ServicesHeroWithCards: React.FC = () => {
       ease: 'power2.out'
     }, 0.3);
 
-    // Phase 2: Creative curved card layout (50% - 100%)
+    // Phase 2: Mobile-friendly card layout (50% - 100%)
     cardsRef.current.forEach((card, index) => {
       if (!card) return;
 
-      // Calculate final positions: cards in a gentle arc for better visibility
       const totalCards = services.length;
       const centerIndex = (totalCards - 1) / 2;
-      
-      // Responsive horizontal positioning
       const isMobile = window.innerWidth < 640;
       const isTablet = window.innerWidth < 1024;
-      const cardSpacing = isMobile ? 160 : isTablet ? 180 : 220;
-      const totalWidth = (totalCards - 1) * cardSpacing;
-      const startX = -totalWidth / 2;
-      const finalX = startX + (index * cardSpacing);
       
-      // Gentle curve: outer cards slightly higher for better visibility
-      const distanceFromCenter = Math.abs(index - centerIndex);
-      const curveHeight = distanceFromCenter * 15; // Subtle upward curve
-      const finalY = -curveHeight;
+      let finalX, finalY, finalScale;
       
-      // First card appears on far left, last card on far right
-      const cardStartTime = 0.5 + (index * 0.08); // Stagger timing
-      const cardDuration = 0.2; // Animation duration for each card
+      if (isMobile) {
+        // Mobile: Compact grid layout
+        const cardsPerRow = 2;
+        const row = Math.floor(index / cardsPerRow);
+        const col = index % cardsPerRow;
+        const cardWidth = 144; // w-36 = 144px
+        const cardSpacing = 16;
+        const totalRowWidth = (cardsPerRow * cardWidth) + ((cardsPerRow - 1) * cardSpacing);
+        
+        finalX = -totalRowWidth / 2 + (col * (cardWidth + cardSpacing)) + cardWidth / 2;
+        finalY = -80 + (row * 180); // Tighter vertical spacing
+        finalScale = 1; // Keep normal scale on mobile
+      } else {
+        // Tablet and desktop: horizontal curved layout with viewport constraints
+        const maxViewportWidth = window.innerWidth * 0.85; // Use 85% of viewport
+        const idealSpacing = isTablet ? 180 : 220;
+        const totalIdealWidth = (totalCards - 1) * idealSpacing;
+        
+        // Adjust spacing if it would exceed viewport
+        const actualSpacing = totalIdealWidth > maxViewportWidth 
+          ? maxViewportWidth / (totalCards - 1) 
+          : idealSpacing;
+        
+        const totalWidth = (totalCards - 1) * actualSpacing;
+        const startX = -totalWidth / 2;
+        finalX = startX + (index * actualSpacing);
+        
+        // Gentle curve for better visibility
+        const distanceFromCenter = Math.abs(index - centerIndex);
+        const curveHeight = distanceFromCenter * 15;
+        finalY = -curveHeight;
+        finalScale = 1;
+      }
+      
+      // Stagger timing for smooth appearance
+      const cardStartTime = 0.5 + (index * 0.08);
+      const cardDuration = 0.2;
 
       mainTL.to(card, {
-        x: finalX, // Final horizontal position (left to right)
-        y: finalY, // Curved positioning for better visibility
+        x: finalX,
+        y: finalY,
         opacity: 1,
-        rotation: 0, // No rotation for clean layout
-        scale: 1, // All cards same size
+        rotation: 0,
+        scale: finalScale,
         duration: cardDuration,
         ease: 'power2.out'
       }, cardStartTime);
@@ -257,29 +304,29 @@ const ServicesHeroWithCards: React.FC = () => {
       />
 
       {/* Enhanced curved cards layout - mobile responsive */}
-      <div className="absolute inset-0 flex items-center justify-center z-5 px-2 sm:px-4">
-        <div className="relative w-full max-w-[95vw] sm:max-w-[90vw]">
+      <div className="absolute inset-0 flex items-center justify-center z-5 px-4 sm:px-6">
+        <div className="relative w-full max-w-[100vw] overflow-hidden">
           {services.map((service, index) => (
             <Card
               key={index}
               ref={(el) => addCardRef(el, index)}
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-40 sm:w-48 md:w-52 h-64 sm:h-72 md:h-80 bg-card/95 backdrop-blur-md border-2 border-primary/30 shadow-xl hover:shadow-2xl transition-shadow will-change-transform flex flex-col"
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-36 sm:w-44 md:w-52 h-56 sm:h-64 md:h-80 bg-card/95 backdrop-blur-md border-2 border-primary/30 shadow-xl hover:shadow-2xl transition-shadow will-change-transform service-card-mobile flex flex-col"
             >
-              <CardHeader className="text-center pb-2 sm:pb-3 flex-shrink-0 px-2 sm:px-4 md:px-6">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mb-2 sm:mb-3 mx-auto shadow-lg">
-                  <service.icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-primary" />
+              <CardHeader className="text-center pb-1 sm:pb-2 flex-shrink-0 px-2 sm:px-3 md:px-6">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-16 md:h-16 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mb-1 sm:mb-2 mx-auto shadow-lg">
+                  <service.icon className="w-4 h-4 sm:w-5 sm:h-5 md:w-8 md:h-8 text-primary" />
                 </div>
-                <CardTitle className="text-sm sm:text-base md:text-lg font-bold mb-1 sm:mb-2 text-foreground leading-tight">{service.title}</CardTitle>
-                <CardDescription className="text-xs text-muted-foreground leading-relaxed line-clamp-2 sm:line-clamp-3">
+                <CardTitle className="text-xs sm:text-sm md:text-lg font-bold mb-1 text-foreground leading-tight">{service.title}</CardTitle>
+                <CardDescription className="text-xs text-muted-foreground leading-tight line-clamp-2 hidden sm:block">
                   {service.description}
                 </CardDescription>
               </CardHeader>
-              <CardContent className="pt-0 flex-1 flex flex-col justify-start px-2 sm:px-4 md:px-6">
-                <ul className="space-y-1">
+              <CardContent className="pt-0 flex-1 flex flex-col justify-start px-2 sm:px-3 md:px-6">
+                <ul className="space-y-0.5 sm:space-y-1">
                   {service.outcomes.slice(0, 3).map((outcome, i) => (
                     <li key={i} className="flex items-start text-xs">
-                      <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-primary to-accent mr-2 flex-shrink-0 mt-1" />
-                      <span className="text-foreground/80 leading-tight">{outcome}</span>
+                      <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-gradient-to-r from-primary to-accent mr-1.5 sm:mr-2 flex-shrink-0 mt-1" />
+                      <span className="text-foreground/80 leading-tight text-xs">{outcome}</span>
                     </li>
                   ))}
                 </ul>

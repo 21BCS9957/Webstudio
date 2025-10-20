@@ -261,6 +261,48 @@ All colors MUST be HSL.
     backface-visibility: hidden;
   }
   
+  /* Custom card sizes for better laptop/desktop visibility */
+  .w-70 {
+    width: 17.5rem; /* 280px */
+  }
+  
+  .w-80 {
+    width: 20rem; /* 320px */
+  }
+  
+  .h-90 {
+    height: 22.5rem; /* 360px */
+  }
+  
+  /* Z-index utilities */
+  .z-25 {
+    z-index: 25;
+  }
+  
+  .z-30 {
+    z-index: 30;
+  }
+  
+  .z-35 {
+    z-index: 35;
+  }
+  
+  .z-40 {
+    z-index: 40;
+  }
+  
+  /* Services text initial visibility - can be overridden by animations */
+  .services-headline {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* Service card base styles */
+  .service-card {
+    opacity: 0;
+    visibility: hidden;
+  }
+  
   /* Text truncation utilities */
   .line-clamp-2 {
     display: -webkit-box;
